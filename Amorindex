@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animación de Buena Suerte con Confeti y Fuegos Artificiales</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .animacion {
+            font-size: 24px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+        }
+
+        .confeti {
+            width: 10px;
+            height: 10px;
+            background-color: transparent;
+            position: absolute;
+            animation: confeti 4s linear infinite;
+        }
+
+        @keyframes confeti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .confeti:nth-child(1) { background-color: #e74c3c; }
+        .confeti:nth-child(2) { background-color: #3498db; }
+        .confeti:nth-child(3) { background-color: #f1c40f; }
+        .confeti:nth-child(4) { background-color: #2ecc71; }
+        .confeti:nth-child(5) { background-color: #9b59b6; }
+
+        .firework {
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            background-color: #ff9900;
+            border-radius: 50%;
+            animation: launch 1s;
+        }
+
+        @keyframes launch {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-1000px) scale(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animacion">¡Suerte en tu examen de mañana amor mio!</div>
+    <script>
+        const animacion = document.querySelector('.animacion');
+
+        for (let i = 0; i < 100; i++) {
+            const confeti = document.createElement('div');
+            confeti.className = 'confeti';
+            confeti.style.left = Math.random() * window.innerWidth + 'px';
+            confeti.style.animationDelay = Math.random() * 4 + 's';
+            animacion.appendChild(confeti);
+        }
+
+        document.addEventListener("click", (e) => {
+            createFirework(e);
+            createConfetti(e);
+        });
+
+        function createFirework(e) {
+            const firework = document.createElement("div");
+            firework.className = "firework";
+            firework.style.left = e.clientX + "px";
+            firework.style.top = e.clientY + "px";
+            document.body.appendChild(firework);
+            firework.addEventListener("animationend", () => {
+                firework.remove();
+            });
+        }
+
+        function createConfetti(e) {
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement("div");
+                confetti.className = "confeti";
+                confetti.style.left = e.clientX + "px";
+                confetti.style.top = e.clientY + "px";
+                document.body.appendChild(confetti);
+            }
+        }
+    </script>
+</body>
+</html>
